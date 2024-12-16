@@ -1,18 +1,19 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Finance Planner</title>
+    <title>Planejador Financeiro</title>
     <style>
         body {
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
-            background-color: #f4f4f9;
+            background-color: #121212;
+            color: #ffffff;
         }
         header {
-            background-color: #4CAF50;
+            background-color: #1e88e5;
             color: white;
             padding: 15px;
             text-align: center;
@@ -35,9 +36,11 @@
             box-sizing: border-box;
             border: 1px solid #ccc;
             border-radius: 5px;
+            background-color: #1e1e1e;
+            color: #ffffff;
         }
         button {
-            background-color: #4CAF50;
+            background-color: #1e88e5;
             color: white;
             padding: 10px 15px;
             border: none;
@@ -45,53 +48,57 @@
             cursor: pointer;
         }
         button:hover {
-            background-color: #45a049;
+            background-color: #1565c0;
         }
         table {
             width: 100%;
             border-collapse: collapse;
             margin-top: 20px;
+            color: #ffffff;
         }
         table, th, td {
-            border: 1px solid #ddd;
+            border: 1px solid #444;
         }
         th, td {
             padding: 10px;
             text-align: center;
         }
         th {
-            background-color: #4CAF50;
+            background-color: #1e88e5;
             color: white;
+        }
+        td {
+            background-color: #1e1e1e;
         }
     </style>
 </head>
 <body>
     <header>
-        <h1>Finance Planner</h1>
+        <h1>Planejador Financeiro</h1>
     </header>
     <main>
-        <h2>Track Your Expenses</h2>
+        <h2>Controle Seus Gastos</h2>
         <form id="expense-form">
             <div class="form-group">
-                <label for="description">Description</label>
-                <input type="text" id="description" placeholder="E.g., Grocery, Rent">
+                <label for="description">Descrição</label>
+                <input type="text" id="description" placeholder="Ex.: Mercado, Aluguel">
             </div>
             <div class="form-group">
-                <label for="amount">Amount</label>
-                <input type="number" id="amount" placeholder="E.g., 50, 100" min="0" step="0.01">
+                <label for="amount">Valor</label>
+                <input type="number" id="amount" placeholder="Ex.: 50, 100" min="0" step="0.01">
             </div>
-            <button type="button" onclick="addExpense()">Add Expense</button>
+            <button type="button" onclick="addExpense()">Adicionar Gasto</button>
         </form>
         <table>
             <thead>
                 <tr>
-                    <th>Description</th>
-                    <th>Amount</th>
-                    <th>Action</th>
+                    <th>Descrição</th>
+                    <th>Valor</th>
+                    <th>Ação</th>
                 </tr>
             </thead>
             <tbody id="expense-table">
-                <!-- Expenses will be added here dynamically -->
+                <!-- Gastos serão adicionados aqui dinamicamente -->
             </tbody>
         </table>
     </main>
@@ -101,7 +108,7 @@
             const amount = parseFloat(document.getElementById('amount').value);
 
             if (!description || isNaN(amount) || amount <= 0) {
-                alert('Please enter a valid description and amount.');
+                alert('Por favor, insira uma descrição e um valor válidos.');
                 return;
             }
 
@@ -110,8 +117,8 @@
 
             row.innerHTML = `
                 <td>${description}</td>
-                <td>${amount.toFixed(2)}</td>
-                <td><button onclick="removeExpense(this)">Remove</button></td>
+                <td>R$ ${amount.toFixed(2)}</td>
+                <td><button onclick="removeExpense(this)">Remover</button></td>
             `;
 
             table.appendChild(row);
