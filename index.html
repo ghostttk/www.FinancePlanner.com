@@ -6,7 +6,7 @@
     <title>Planejador Financeiro</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
             margin: 0;
             padding: 0;
             background-color: #121212;
@@ -15,8 +15,10 @@
         header {
             background-color: #1e88e5;
             color: white;
-            padding: 15px;
+            padding: 20px;
             text-align: center;
+            font-size: 1.8rem;
+            font-weight: bold;
         }
         main {
             padding: 20px;
@@ -29,23 +31,27 @@
         .form-group label {
             display: block;
             margin-bottom: 5px;
+            font-size: 1rem;
         }
         .form-group input {
             width: 100%;
             padding: 10px;
             box-sizing: border-box;
             border: 1px solid #ccc;
-            border-radius: 5px;
+            border-radius: 10px;
             background-color: #1e1e1e;
             color: #ffffff;
+            font-size: 1rem;
         }
         button {
             background-color: #1e88e5;
             color: white;
-            padding: 10px 15px;
+            padding: 10px 20px;
             border: none;
-            border-radius: 5px;
+            border-radius: 10px;
             cursor: pointer;
+            font-size: 1rem;
+            font-weight: bold;
         }
         button:hover {
             background-color: #1565c0;
@@ -60,8 +66,9 @@
             border: 1px solid #444;
         }
         th, td {
-            padding: 10px;
+            padding: 15px;
             text-align: center;
+            font-size: 1rem;
         }
         th {
             background-color: #1e88e5;
@@ -70,11 +77,20 @@
         td {
             background-color: #1e1e1e;
         }
+        #calculator, #tips {
+            margin-top: 40px;
+        }
+        .tips-box {
+            background-color: #1e1e1e;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+        }
     </style>
 </head>
 <body>
     <header>
-        <h1>Planejador Financeiro</h1>
+        Planejador Financeiro
     </header>
     <main>
         <h2>Controle Seus Gastos</h2>
@@ -101,6 +117,19 @@
                 <!-- Gastos serão adicionados aqui dinamicamente -->
             </tbody>
         </table>
+
+        <section id="calculator">
+            <h2>Calculadora de Gastos</h2>
+            <button onclick="calculateTotal()">Calcular Total</button>
+            <p id="total-display">Total: R$ 0,00</p>
+        </section>
+
+        <section id="tips">
+            <h2>Dicas de Economia</h2>
+            <div class="tips-box" id="tips-box">
+                <p>Adicione seus gastos para receber dicas personalizadas!</p>
+            </div>
+        </section>
     </main>
     <script>
         function addExpense() {
@@ -125,11 +154,44 @@
 
             document.getElementById('description').value = '';
             document.getElementById('amount').value = '';
+            updateTips();
         }
 
         function removeExpense(button) {
             const row = button.parentElement.parentElement;
             row.remove();
+            updateTips();
+        }
+
+        function calculateTotal() {
+            const rows = document.querySelectorAll('#expense-table tr');
+            let total = 0;
+
+            rows.forEach(row => {
+                const amount = parseFloat(row.cells[1].textContent.replace('R$', '').replace(',', '.'));
+                total += amount;
+            });
+
+            document.getElementById('total-display').textContent = `Total: R$ ${total.toFixed(2)}`;
+        }
+
+        function updateTips() {
+            const rows = document.querySelectorAll('#expense-table tr');
+            let total = 0;
+
+            rows.forEach(row => {
+                const amount = parseFloat(row.cells[1].textContent.replace('R$', '').replace(',', '.'));
+                total += amount;
+            });
+
+            const tipsBox = document.getElementById('tips-box');
+            if (total > 1000) {
+                tipsBox.innerHTML = '<p>Você está gastando bastante! Que tal rever gastos como lazer ou assinaturas?</p>';
+            } else if (total > 500) {
+                tipsBox.innerHTML = '<p>Seus gastos estão moderados. Considere economizar em itens supérfluos.</p>';
+            } else {
+                tipsBox.innerHTML = '<p>Seus gastos estão sob controle! Continue assim.</p>';
+            }
         }
     </script>
 </body>
